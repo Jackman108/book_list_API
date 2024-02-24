@@ -64,6 +64,8 @@ $config = [
             'rules' => [
                 ['class' => 'yii\rest\UrlRule', 'controller' => ['books'], 'except' => ['view', 'update']],
                 ['class' => 'yii\rest\UrlRule', 'controller' => ['author'], 'except' => ['view', 'update']],
+                'POST auth' => 'auth/index', // Экшен для инициации аутентификации
+                'GET auth/callback' => 'auth/callback', // Экшен для обработки ответа от провайдера аутентификации
             ],
         ],
     ],

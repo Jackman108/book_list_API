@@ -3,7 +3,6 @@
 namespace app\controllers;
 
 use Yii;
-use yii\authclient\ClientInterface;
 use Yii\base\Exception;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -127,31 +126,5 @@ class SiteController extends Controller
     public function actionAbout(): string
     {
         return $this->render('about');
-    }
-
-    /**
-     * OAuth2 authentication action.
-     *
-     * @return Response
-     * @throws Exception
-     */
-
-    public function actionAuth(): Response
-    {
-        $authClient = Yii::$app->authClientCollection->getClient('google');
-        $redirectUri = Yii::$app->urlManager->createAbsoluteUrl(['site/auth']);
-
-        if (!$authClient instanceof ClientInterface) {
-            throw new yii\base\Exception('Unknown auth client');
-        }
-
-        if (isset($_GET['code'])) {
-            $token = $authClient->fetchAccessToken($_GET['code']);
-            $attributes = $authClient->getUserAttributes();
-            return $this->redirect(['site/index']);
-        } else {
-            $authUrl = $authClient->buildAuthUrl(['redirect_uri' => $redirectUri]);
-            return $this->redirect($authUrl);
-        }
     }
 }
