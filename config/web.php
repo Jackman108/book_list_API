@@ -1,7 +1,7 @@
 <?php
 use Dotenv\Dotenv;
 
-$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv = Dotenv::createImmutable(dirname(__DIR__));
 $dotenv->load();
 
 $params = require __DIR__ . '/params.php';
