@@ -5,6 +5,7 @@ namespace app\controllers;
 use Throwable;
 use Yii;
 use yii\base\InvalidConfigException;
+use yii\data\DataFilter;
 use yii\db\StaleObjectException;
 use yii\rest\ActiveController;
 use app\models\Book;
@@ -14,12 +15,42 @@ class BooksController extends ActiveController
 {
     public $modelClass = 'app\models\Book';
 
+    /**
+     * Метод для получения списка книг.
+     *
+     * Метод: GET
+     * URL: /books
+     * Ответ: массив объектов книг.
+     */
     public function actionIndex(): array
     {
         return Book::find()->all();
     }
 
     /**
+     * @inheritdoc
+     */
+    public function actions(): array
+    {
+        return array_merge(parent::actions(), [
+            'index' => [
+                'class' => 'yii\rest\IndexAction',
+                'modelClass' => $this->modelClass,
+                'dataFilter' => [
+                    'class' => DataFilter::class,
+                    'searchModel' => 'app\models\BookSearch',
+                ],
+            ],
+        ]);
+    }
+
+    /**
+     * Метод для создания новой книги.
+     *
+     * Метод: POST
+     * URL: /books
+     * Тело запроса: JSON объект с данными новой книги.
+     * Ответ: созданный объект книги.
      * @throws InvalidConfigException
      */
     public function actionCreate()
@@ -38,6 +69,13 @@ class BooksController extends ActiveController
     }
 
     /**
+     * Метод для редактирования существующей книги.
+     *
+     * Метод: PUT
+     * URL: /books/:id
+     * Параметры запроса: id - идентификатор книги.
+     * Тело запроса: JSON объект с данными для обновления книги.
+     * Ответ: обновленный объект книги.
      * @throws InvalidConfigException
      */
     public function actionUpdate($id)
@@ -60,6 +98,12 @@ class BooksController extends ActiveController
     }
 
     /**
+     * Метод для удаления книги.
+     *
+     * Метод: DELETE
+     * URL: /books/:id
+     * Параметры запроса: id - идентификатор книги.
+     * Ответ: сообщение об успешном удалении книги.
      * @throws Throwable
      * @throws StaleObjectException
      */

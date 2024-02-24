@@ -1,0 +1,236 @@
+openapi: 3.0.0
+info:
+  title: "REST API 'Список книг'"
+  version: "1.0.0"
+  description: "REST API для работы с книгами и авторами"
+servers:
+  - url: "http://localhost/api/v1"
+paths:
+  /authors:
+    get:
+      summary: Получение списка авторов
+      responses:
+        '200':
+          description: Успешный запрос
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Author'
+        '404':
+          description: Авторы не найдены
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+    post:
+      summary: Создание нового автора
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Author'
+      responses:
+        '201':
+          description: Автор успешно создан
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Author'
+        '422':
+          description: Не удалось создать автора
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+  /authors/{id}:
+    put:
+      summary: Редактирование существующего автора
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Идентификатор автора
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Author'
+      responses:
+        '200':
+          description: Автор успешно обновлен
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Author'
+        '404':
+          description: Автор не найден
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+    delete:
+      summary: Удаление автора
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Идентификатор автора
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Автор успешно удален
+        '404':
+          description: Автор не найден
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /books:
+    get:
+      summary: Получение списка книг
+      responses:
+        '200':
+          description: Успешный запрос
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Book'
+    post:
+      summary: Создание новой книги
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Book'
+      responses:
+        '201':
+          description: Книга успешно создана
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+        '422':
+          description: Не удалось создать книгу
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+  /books/{id}:
+    put:
+      summary: Редактирование существующей книги
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Идентификатор книги
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Book'
+      responses:
+        '200':
+          description: Книга успешно обновлена
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+        '404':
+          description: Книга не найдена
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+    delete:
+      summary: Удаление книги
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Идентификатор книги
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Книга успешно удалена
+        '404':
+          description: Книга не найдена
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+components:
+  schemas:
+    Author:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Идентификатор автора
+        name:
+          type: string
+          description: Имя автора
+        birth_year:
+          type: integer
+          description: Год рождения автора
+        country:
+          type: string
+          description: Страна автора
+    Book:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Идентификатор книги
+        title:
+          type: string
+          description: Название книги
+        author_id:
+          type: integer
+          description: Идентификатор автора
+        pages:
+          type: integer
+          description: Число страниц
+        language:
+          type: string
+          description: Язык книги
+        genre:
+          type: string
+          description: Жанр книги
+        description:
+          type: string
+          description: Описание книги

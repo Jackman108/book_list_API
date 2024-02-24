@@ -5,6 +5,7 @@ namespace app\controllers;
 use Throwable;
 use Yii;
 use yii\base\InvalidConfigException;
+use yii\data\DataFilter;
 use yii\db\StaleObjectException;
 use yii\rest\ActiveController;
 use app\models\Author;
@@ -13,14 +14,44 @@ use yii\web\Response;
 
 class AuthorController extends ActiveController
 {
-public $modelClass = 'app\models\Author';
+    public $modelClass = 'app\models\Author';
 
+    /**
+     * Метод для получения списка авторов.
+     *
+     * Метод: GET
+     * URL: /authors
+     * Ответ: массив объектов авторов.
+     */
     public function actionIndex(): array
     {
         return Author::find()->all();
     }
 
     /**
+     * @inheritdoc
+     */
+    public function actions(): array
+    {
+        return array_merge(parent::actions(), [
+            'index' => [
+                'class' => 'yii\rest\IndexAction',
+                'modelClass' => $this->modelClass,
+                'dataFilter' => [
+                    'class' => DataFilter::class,
+                    'searchModel' => 'app\models\AuthorSearch',
+                ],
+            ],
+        ]);
+    }
+
+    /**
+     * Метод для создания нового автора.
+     *
+     * Метод: POST
+     * URL: /authors
+     * Тело запроса: JSON объект с данными нового автора.
+     * Ответ: созданный объект автора.
      * @throws InvalidConfigException
      */
     public function actionCreate()
@@ -39,6 +70,13 @@ public $modelClass = 'app\models\Author';
     }
 
     /**
+     * Метод для редактирования существующего автора.
+     *
+     * Метод: PUT
+     * URL: /authors/:id
+     * Параметры запроса: id - идентификатор автора.
+     * Тело запроса: JSON объект с данными для обновления автора.
+     * Ответ: обновленный объект автора.
      * @throws InvalidConfigException
      */
     public function actionUpdate($id)
@@ -62,6 +100,12 @@ public $modelClass = 'app\models\Author';
     }
 
     /**
+     * Метод для удаления автора.
+     *
+     * Метод: DELETE
+     * URL: /authors/:id
+     * Параметры запроса: id - идентификатор автора.
+     * Ответ: сообщение об успешном удалении автора.
      * @throws Throwable
      * @throws StaleObjectException
      */
