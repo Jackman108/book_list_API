@@ -2,7 +2,6 @@
 
 namespace app\controllers;
 
-use app\models\Book;
 use Yii;
 use yii\authclient\ClientInterface;
 use Yii\base\Exception;
@@ -15,25 +14,6 @@ use app\models\ContactForm;
 
 class SiteController extends Controller
 {
-
-    public function actionTestDbConnection()
-    {
-        // Попробуем выполнить простой запрос на выборку всех книг
-        $books = Book::find()->all();
-
-        // Проверяем, есть ли книги
-        if (!empty($books)) {
-            // Если есть книги, выводим информацию о них
-            foreach ($books as $book) {
-                echo $book->title . '<br>';
-            }
-        } else {
-            // Если нет книг, выводим сообщение об ошибке
-            echo 'В базе данных нет книг.';
-        }
-    }
-
-
     /**
      * {@inheritdoc}
      */

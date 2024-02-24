@@ -45,19 +45,4 @@ class m240224_021957_create_book_and_author_tables extends Migration
         // Удаление таблицы авторов
         $this->dropTable('author');
     }
-
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
-
-    }
-
-    public function down()
-    {
-        echo "m240224_021957_create_book_and_author_tables cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }

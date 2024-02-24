@@ -52,6 +52,9 @@ $config = [
                     'class' => 'yii\authclient\clients\Google',
                     'clientId' => $_ENV['GOOGLE_CLIENT_ID'],
                     'clientSecret' => $_ENV['GOOGLE_CLIENT_SECRET'],
+                    'tokenUrl' => 'https://accounts.google.com/o/oauth2/token',
+                    'authorizationUrl' => 'https://accounts.google.com/o/oauth2/auth',
+                    'scope' => 'email profile openid',
                 ],
             ],
         ],
@@ -59,12 +62,8 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                // здесь указываются правила маршрутизации для ваших API-эндпоинтов
-                // пример:
-                // [
-                //     'class' => 'yii\rest\UrlRule',
-                //     'controller' => 'book',
-                // ],
+                ['class' => 'yii\rest\UrlRule', 'controller' => ['books'], 'except' => ['view', 'update']],
+                ['class' => 'yii\rest\UrlRule', 'controller' => ['author'], 'except' => ['view', 'update']],
             ],
         ],
     ],
