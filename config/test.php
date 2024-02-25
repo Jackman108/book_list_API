@@ -11,6 +11,8 @@ return [
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
+        '@tests' => dirname(__DIR__) . '/tests',
+        '@app/models' => '@app/models',
     ],
     'language' => 'en-US',
     'components' => [

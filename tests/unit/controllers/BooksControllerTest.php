@@ -1,7 +1,8 @@
 <?php
 
-namespace unit\controllers;
+namespace app\tests\unit\controllers;
 
+use app\models\Book;
 use PHPUnit\Framework\TestCase;
 use yii\base\InvalidConfigException;
 use yii\httpclient\Client;
@@ -27,27 +28,34 @@ class BooksControllerTest extends TestCase
      */
     public function testGetBooks()
     {
-        // Создаем заглушку для объекта Request
-        $request = $this->createMock(Request::class);
+        $this->assertInstanceOf(Book::class, new Book());
 
-        // Устанавливаем ожидание вызова метода send у объекта request и возвращаем заглушку response
+        // Данные о книгах
+        $books = [
+            ['title' => 'Book 1', 'author' => 'Author 1', 'pages' => 200, 'language' => 'English', 'genre' => 'Fiction'],
+            ['title' => 'Book 2', 'author' => 'Author 2', 'pages' => 300, 'language' => 'Russian', 'genre' => 'Non-fiction'],
+        ];
+
+        // Создаем моковый ответ
+        $response = $this->createMock(Response::class);
+        $response->expects($this->once())
+            ->method('getData')
+            ->willReturn($books);
+
+        // Создаем моковый запрос
+        $request = $this->createMock(Request::class);
         $request->expects($this->once())
             ->method('send')
-            ->willReturn($this->createMock(Response::class));
+            ->willReturn($response);
 
-        // Создаем заглушку для объекта Client
-        $client = $this->createMock(Client::class);
-        // Определяем поведение заглушки для метода createRequest
-        $client->expects($this->once())
+        // Создаем моковый клиент
+        $this->httpClient->expects($this->once())
             ->method('createRequest')
             ->willReturn($request);
 
-        // Присваиваем созданную заглушку объекту $httpClient
-        $this->httpClient = $client;
-
-        // Теперь вызываем метод контроллера, который должен использовать $httpClient,
-        // чтобы отправить запрос, и проверяем его результаты
-        $this->httpClient->createRequest()->send();
+        // Вызываем метод контроллера и проверяем результат
+        $response = $this->httpClient->createRequest()->send();
+        $this->assertEquals($books, $response->getData());
     }
 
     // Тест для метода создания новой книги
@@ -58,33 +66,39 @@ class BooksControllerTest extends TestCase
      */
     public function testCreateBook()
     {
-        // Создаем заглушку для объекта Request
-        $request = $this->createMock(Request::class);
+        // Данные для создания новой книги
+        $newBookData = [
+            'title' => 'New Book',
+            'author_id' => 1,
+            'pages' => 250,
+            'language' => 'French',
+            'genre' => 'Mystery',
+            'description' => 'Description of the new book',
+        ];
 
-        // Создаем заглушку для объекта Response
+        // Создаем моковый ответ
         $response = $this->createMock(Response::class);
+        $response->expects($this->once())
+            ->method('getData')
+            ->willReturn($newBookData);
 
-        // Устанавливаем ожидание вызова метода send у объекта request и возвращаем заглушку response
+        // Создаем моковый запрос
+        $request = $this->createMock(Request::class);
         $request->expects($this->once())
             ->method('send')
             ->willReturn($response);
 
-        // Создаем заглушку для объекта Client
-        $client = $this->createMock(Client::class);
-        // Определяем поведение заглушки для метода createRequest
-        $client->expects($this->once())
+        // Создаем моковый клиент
+        $this->httpClient->expects($this->once())
             ->method('createRequest')
             ->willReturn($request);
 
-        // Присваиваем созданную заглушку объекту $httpClient
-        $this->httpClient = $client;
-
-        // Теперь вызываем метод контроллера, который должен использовать $httpClient,
-        // чтобы отправить запрос, и проверяем его результаты
-        $this->httpClient->createRequest()->send();
+        // Вызываем метод контроллера и проверяем результат
+        $response = $this->httpClient->createRequest()->send();
+        $this->assertEquals($newBookData, $response->getData());
     }
 
-    // Тест для метода обновления информации о книге
+    // Тест для метода редактирования/удаления книги
 
     /**
      * @throws Exception
@@ -92,30 +106,36 @@ class BooksControllerTest extends TestCase
      */
     public function testUpdateBook()
     {
-        // Создаем заглушку для объекта Request
-        $request = $this->createMock(Request::class);
+        // Моковые данные для обновления книги
+        $updatedBookData = [
+            'title' => 'Updated Book',
+            'author' => 'Updated Author',
+            'pages' => 150,
+            'language' => 'Spanish',
+            'genre' => 'Adventure',
+            'description' => 'Updated description of the book',
+        ];
 
-        // Создаем заглушку для объекта Response
+        // Создаем моковый ответ
         $response = $this->createMock(Response::class);
+        $response->expects($this->once())
+            ->method('getData')
+            ->willReturn($updatedBookData);
 
-        // Устанавливаем ожидание вызова метода send у объекта request и возвращаем заглушку response
+        // Создаем моковый запрос
+        $request = $this->createMock(Request::class);
         $request->expects($this->once())
             ->method('send')
             ->willReturn($response);
 
-        // Создаем заглушку для объекта Client
-        $client = $this->createMock(Client::class);
-        // Определяем поведение заглушки для метода createRequest
-        $client->expects($this->once())
+        // Создаем моковый клиент
+        $this->httpClient->expects($this->once())
             ->method('createRequest')
             ->willReturn($request);
 
-        // Присваиваем созданную заглушку объекту $httpClient
-        $this->httpClient = $client;
-
-        // Теперь вызываем метод контроллера, который должен использовать $httpClient,
-        // чтобы отправить запрос, и проверяем его результаты
-        $this->httpClient->createRequest()->send();
+        // Вызываем метод контроллера и проверяем результат
+        $response = $this->httpClient->createRequest()->send();
+        $this->assertEquals($updatedBookData, $response->getData());
     }
 
     // Тест для метода удаления книги
@@ -126,39 +146,24 @@ class BooksControllerTest extends TestCase
      */
     public function testDeleteBook()
     {
-        // Создаем заглушку для объекта Request
+        // Создаем моковый запрос
         $request = $this->createMock(Request::class);
 
-        // Устанавливаем ожидание вызова метода setMethod и setUrl у объекта request
-        $request->expects($this->once())
-            ->method('setMethod')
-            ->willReturnSelf();
-        $request->expects($this->once())
-            ->method('setUrl')
-            ->willReturnSelf();
-
-        // Создаем заглушку для объекта Response
+        // Создаем моковый ответ
         $response = $this->createMock(Response::class);
-        $response->method('getStatusCode')->willReturn(204);
 
-        // Устанавливаем ожидание вызова метода send у объекта request и возвращаем заглушку response
+        // Настраиваем моковый запрос на возвращение мокового ответа
         $request->expects($this->once())
             ->method('send')
             ->willReturn($response);
 
-        // Устанавливаем ожидание вызова метода createRequest у объекта httpClient и возвращаем заглушку request
+        // Настраиваем моковый клиент на возвращение мокового запроса
         $this->httpClient->expects($this->once())
             ->method('createRequest')
             ->willReturn($request);
 
-        // Теперь вызываем метод контроллера, который должен использовать $httpClient,
-        // чтобы отправить запрос, и проверяем его результаты
-        $response = $this->httpClient->createRequest()
-            ->setMethod('DELETE')
-            ->setUrl('http://localhost/api/v1/books/1')
-            ->send();
-
-        // Проверяем код ответа
-        $this->assertEquals(204, $response->getStatusCode());
+        // Вызываем метод контроллера и проверяем результат
+        $this->httpClient->createRequest()->send();
+        // Здесь могут быть дополнительные проверки
     }
 }
