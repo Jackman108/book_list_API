@@ -1,4 +1,6 @@
 <?php
+//config/web.php
+
 use Dotenv\Dotenv;
 
 $dotenv = Dotenv::createImmutable(dirname(__DIR__));
@@ -64,8 +66,8 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                ['class' => 'yii\rest\UrlRule', 'controller' => ['books'], 'except' => ['view', 'update']],
-                ['class' => 'yii\rest\UrlRule', 'controller' => ['author'], 'except' => ['view', 'update']],
+                ['class' => 'yii\rest\UrlRule', 'controller' => ['books']],
+                ['class' => 'yii\rest\UrlRule', 'controller' => ['author']],
                 'POST auth' => 'auth/index', // Экшен для инициации аутентификации
                 'GET auth/callback' => 'auth/callback', // Экшен для обработки ответа от провайдера аутентификации
             ],

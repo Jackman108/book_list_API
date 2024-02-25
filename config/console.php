@@ -1,7 +1,8 @@
 <?php
+//config/console.php
 
 $params = require __DIR__ . '/params.php';
-$db = require __DIR__ . '/db.php';
+$db = require __DIR__ . '/test_db.php';
 
 $config = [
     'id' => 'basic-console',
@@ -26,6 +27,14 @@ $config = [
             ],
         ],
         'db' => $db,
+        'request' => [
+            'class' => 'yii\web\Request',
+            // Дополнительные настройки request для тестов
+        ],
+        'response' => [
+            'class' => 'yii\web\Response',
+            // Дополнительные настройки response для тестов
+        ],
     ],
     'params' => $params,
     /*

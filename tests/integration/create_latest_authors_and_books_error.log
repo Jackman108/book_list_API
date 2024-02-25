@@ -1,0 +1,4 @@
+Error inserting data: SQLSTATE[42P01]: Undefined table: 7 ОШИБКА:  отношение "authors" не существует
+LINE 1: INSERT INTO "authors" ("name", "birth_year", "country") VALU...
+                    ^
+The SQL being executed was: INSERT INTO "authors" ("name", "birth_year", "country") VALUES ('Author 1', 1980, 'Country 1'), ('Author 2', 1990, 'Country 2'), ('Author 3', 1975, 'Country 3')

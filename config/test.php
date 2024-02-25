@@ -1,4 +1,7 @@
 <?php
+//config/test.php
+use yii\symfonymailer\Mailer;
+
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/test_db.php';
 
@@ -13,12 +16,13 @@ return [
         '@npm'   => '@vendor/npm-asset',
         '@tests' => dirname(__DIR__) . '/tests',
         '@app/models' => '@app/models',
+        '@app/controllers' => '@app/controllers',
     ],
     'language' => 'en-US',
     'components' => [
         'db' => $db,
         'mailer' => [
-            'class' => \yii\symfonymailer\Mailer::class,
+            'class' => Mailer::class,
             'viewPath' => '@app/mail',
             // send all mails to a file by default.
             'useFileTransport' => true,
