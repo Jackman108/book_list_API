@@ -50,7 +50,7 @@ class AuthorsControllerTest extends TestCase
             ->method('send')
             ->willReturn($response);
 
-        // Create a mock Client
+        // Create a mock Client.php
         $this->httpClient->expects($this->once())
             ->method('createRequest')
             ->willReturn($request);
@@ -88,7 +88,7 @@ class AuthorsControllerTest extends TestCase
             ->method('send')
             ->willReturn($response);
 
-        // Create a mock Client
+        // Create a mock Client.php
         $this->httpClient->expects($this->once())
             ->method('createRequest')
             ->willReturn($request);
@@ -123,7 +123,7 @@ class AuthorsControllerTest extends TestCase
             ->method('send')
             ->willReturn($response);
 
-        // Create a mock Client
+        // Create a mock Client.php
         $this->httpClient->expects($this->once())
             ->method('createRequest')
             ->willReturn($request);

@@ -1,111 +1,29 @@
 {
   "info": {
-    "_postman_id": "9065c914-69f2-48cf-a092-ff6a72ff89c5",
-    "name": "REST API Tests",
-    "description": "Tests for the REST API 'Список книг'",
+    "_postman_id": "Your_Postman_Collection_ID",
+    "name": "REST API 'Список книг'",
+    "description": "REST API для работы с книгами и авторами",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
-    {
-      "name": "Аутентификация пользователя",
-      "request": {
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\"username\": \"example_user\", \"password\": \"example_password\"}"
-        },
-        "url": {
-          "raw": "http://localhost:8080//api/v1/auth",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "path": [
-            "api",
-            "v1",
-            "auth"
-          ]
-        }
-      },
-      "response": [],
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "type": "text/javascript",
-            "exec": [
-              "pm.test(\"Status code is 200\", function () {",
-              "    pm.response.to.have.status(200);",
-              "});",
-              "pm.test(\"Body should contain access token\", function () {",
-              "    pm.expect(pm.response.json()).to.have.property('access_token');",
-              "});"
-            ]
-          }
-        },
-        {
-          "listen": "test",
-          "script": {
-            "type": "text/javascript",
-            "exec": [
-              "pm.test(\"Status code is 401 for incorrect credentials\", function () {",
-              "    pm.response.to.have.status(401);",
-              "});",
-              "pm.test(\"Body should contain authentication error\", function () {",
-              "    pm.expect(pm.response.json()).to.have.property('error', 'Authentication error');",
-              "});"
-            ]
-          }
-        }
-      ]
-    },
     {
       "name": "Получение списка авторов",
       "request": {
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "http://localhost/api/v1/authors",
+          "raw": "http://localhost:8080/authors",
           "protocol": "http",
           "host": [
             "localhost"
           ],
+          "port": "8080",
           "path": [
-            "api",
-            "v1",
             "authors"
           ]
         }
       },
-      "response": [],
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "type": "text/javascript",
-            "exec": [
-              "pm.test(\"Status code is 200\", function () {",
-              "    pm.response.to.have.status(200);",
-              "});",
-              "pm.test(\"Response should be an array\", function () {",
-              "    pm.expect(pm.response.json()).to.be.an('array');",
-              "});"
-            ]
-          }
-        },
-        {
-          "listen": "test",
-          "script": {
-            "type": "text/javascript",
-            "exec": [
-              "pm.test(\"Status code is 404 for invalid URL\", function () {",
-              "    pm.response.to.have.status(404);",
-              "});"
-            ]
-          }
-        }
-      ]
+      "response": []
     },
     {
       "name": "Создание нового автора",
@@ -114,52 +32,21 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\"name\": \"New Author\", \"birth_year\": 1980, \"country\": \"USA\"}"
+          "raw": "{\n    \"id\": 1,\n    \"name\": \"author_name\",\n    \"birth_year\": 1980,\n    \"country\": \"author_country\"\n}"
         },
         "url": {
-          "raw": "http://localhost/api/v1/authors",
+          "raw": "http://localhost:8080/authors",
           "protocol": "http",
           "host": [
             "localhost"
           ],
+          "port": "8080",
           "path": [
-            "api",
-            "v1",
             "authors"
           ]
         }
       },
-      "response": [],
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "type": "text/javascript",
-            "exec": [
-              "pm.test(\"Status code is 201\", function () {",
-              "    pm.response.to.have.status(201);",
-              "});",
-              "pm.test(\"Body should contain created author\", function () {",
-              "    pm.expect(pm.response.json()).to.have.property('id');",
-              "    pm.expect(pm.response.json().name).to.eql('New Author');",
-              "    pm.expect(pm.response.json().birth_year).to.eql(1980);",
-              "    pm.expect(pm.response.json().country).to.eql('USA');",
-              "});"
-            ]
-          }
-        },
-        {
-          "listen": "test",
-          "script": {
-            "type": "text/javascript",
-            "exec": [
-              "pm.test(\"Status code is 422 for invalid data\", function () {",
-              "    pm.response.to.have.status(422);",
-              "});"
-            ]
-          }
-        }
-      ]
+      "response": []
     },
     {
       "name": "Редактирование существующего автора",
@@ -168,53 +55,22 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\"name\": \"Updated Author\", \"birth_year\": 1975, \"country\": \"UK\"}"
+          "raw": "{\n    \"id\": 1,\n    \"name\": \"updated_author_name\",\n    \"birth_year\": 1990,\n    \"country\": \"updated_author_country\"\n}"
         },
         "url": {
-          "raw": "http://localhost/api/v1/authors/1",
+          "raw": "http://localhost:8080/authors/1",
           "protocol": "http",
           "host": [
             "localhost"
           ],
+          "port": "8080",
           "path": [
-            "api",
-            "v1",
             "authors",
             "1"
           ]
         }
       },
-      "response": [],
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "type": "text/javascript",
-            "exec": [
-              "pm.test(\"Status code is 200\", function () {",
-              "    pm.response.to.have.status(200);",
-              "});",
-              "pm.test(\"Body should contain updated author\", function () {",
-              "    pm.expect(pm.response.json()).to.have.property('id');",
-              "    pm.expect(pm.response.json().name).to.eql('Updated Author');",
-              "    pm.expect(pm.response.json().birth_year).to.eql(1975);",
-              "    pm.expect(pm.response.json().country).to.eql('UK');",
-              "});"
-            ]
-          }
-        },
-        {
-          "listen": "test",
-          "script": {
-            "type": "text/javascript",
-            "exec": [
-              "pm.test(\"Status code is 404 for non-existing author\", function () {",
-              "    pm.response.to.have.status(404);",
-              "});"
-            ]
-          }
-        }
-      ]
+      "response": []
     },
     {
       "name": "Удаление автора",
@@ -222,44 +78,19 @@
         "method": "DELETE",
         "header": [],
         "url": {
-          "raw": "http://localhost/api/v1/authors/1",
+          "raw": "http://localhost:8080/authors/1",
           "protocol": "http",
           "host": [
             "localhost"
           ],
+          "port": "8080",
           "path": [
-            "api",
-            "v1",
             "authors",
             "1"
           ]
         }
       },
-      "response": [],
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "type": "text/javascript",
-            "exec": [
-              "pm.test(\"Status code is 204\", function () {",
-              "    pm.response.to.have.status(204);",
-              "});"
-            ]
-          }
-        },
-        {
-          "listen": "test",
-          "script": {
-            "type": "text/javascript",
-            "exec": [
-              "pm.test(\"Status code is 404 for non-existing author\", function () {",
-              "    pm.response.to.have.status(404);",
-              "});"
-            ]
-          }
-        }
-      ]
+      "response": []
     },
     {
       "name": "Получение списка книг",
@@ -267,46 +98,18 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "http://localhost/api/v1/books",
+          "raw": "http://localhost:8080/books",
           "protocol": "http",
           "host": [
             "localhost"
           ],
+          "port": "8080",
           "path": [
-            "api",
-            "v1",
             "books"
           ]
         }
       },
-      "response": [],
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "type": "text/javascript",
-            "exec": [
-              "pm.test(\"Status code is 200\", function () {",
-              "    pm.response.to.have.status(200);",
-              "});",
-              "pm.test(\"Response should be an array\", function () {",
-              "    pm.expect(pm.response.json()).to.be.an('array');",
-              "});"
-            ]
-          }
-        },
-        {
-          "listen": "test",
-          "script": {
-            "type": "text/javascript",
-            "exec": [
-              "pm.test(\"Status code is 404 for invalid URL\", function () {",
-              "    pm.response.to.have.status(404);",
-              "});"
-            ]
-          }
-        }
-      ]
+      "response": []
     },
     {
       "name": "Создание новой книги",
@@ -315,55 +118,21 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\"title\": \"New Book\", \"author_id\": 1, \"pages\": 200, \"language\": \"English\", \"genre\": \"Fiction\", \"description\": \"A new book\"}"
+          "raw": "{\n    \"id\": 1,\n    \"title\": \"book_title\",\n    \"author_id\": 1,\n    \"pages\": 200,\n    \"language\": \"book_language\",\n    \"genre\": \"book_genre\",\n    \"description\": \"book_description\"\n}"
         },
         "url": {
-          "raw": "http://localhost/api/v1/books",
+          "raw": "http://localhost:8080/books",
           "protocol": "http",
           "host": [
             "localhost"
           ],
+          "port": "8080",
           "path": [
-            "api",
-            "v1",
             "books"
           ]
         }
       },
-      "response": [],
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "type": "text/javascript",
-            "exec": [
-              "pm.test(\"Status code is 201\", function () {",
-              "    pm.response.to.have.status(201);",
-              "});",
-              "pm.test(\"Body should contain created book\", function () {",
-              "    pm.expect(pm.response.json()).to.have.property('id');",
-              "    pm.expect(pm.response.json().title).to.eql('New Book');",
-              "    pm.expect(pm.response.json().author_id).to.eql(1);",
-              "    pm.expect(pm.response.json().pages).to.eql(200);",
-              "    pm.expect(pm.response.json().language).to.eql('English');",
-              "    pm.expect(pm.response.json().genre).to.eql('Fiction');",
-              "    pm.expect(pm.response.json().description).to.eql('A new book');",
-              "});"
-            ]
-          }
-        },
-        {
-          "listen": "test",
-          "script": {
-            "type": "text/javascript",
-            "exec": [
-              "pm.test(\"Status code is 422 for invalid data\", function () {",
-              "    pm.response.to.have.status(422);",
-              "});"
-            ]
-          }
-        }
-      ]
+      "response": []
     },
     {
       "name": "Редактирование существующей книги",
@@ -372,56 +141,22 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\"title\": \"Updated Book\", \"author_id\": 2, \"pages\": 250, \"language\": \"French\", \"genre\": \"Non-fiction\", \"description\": \"An updated book\"}"
+          "raw": "{\n    \"id\": 1,\n    \"title\": \"updated_book_title\",\n    \"author_id\": 1,\n    \"pages\": 250,\n    \"language\": \"updated_book_language\",\n    \"genre\": \"updated_book_genre\",\n    \"description\": \"updated_book_description\"\n}"
         },
         "url": {
-          "raw": "http://localhost/api/v1/books/1",
+          "raw": "http://localhost:8080/books/1",
           "protocol": "http",
           "host": [
             "localhost"
           ],
+          "port": "8080",
           "path": [
-            "api",
-            "v1",
             "books",
             "1"
           ]
         }
       },
-      "response": [],
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "type": "text/javascript",
-            "exec": [
-              "pm.test(\"Status code is 200\", function () {",
-              "    pm.response.to.have.status(200);",
-              "});",
-              "pm.test(\"Body should contain updated book\", function () {",
-              "    pm.expect(pm.response.json()).to.have.property('id');",
-              "    pm.expect(pm.response.json().title).to.eql('Updated Book');",
-              "    pm.expect(pm.response.json().author_id).to.eql(2);",
-              "    pm.expect(pm.response.json().pages).to.eql(250);",
-              "    pm.expect(pm.response.json().language).to.eql('French');",
-              "    pm.expect(pm.response.json().genre).to.eql('Non-fiction');",
-              "    pm.expect(pm.response.json().description).to.eql('An updated book');",
-              "});"
-            ]
-          }
-        },
-        {
-          "listen": "test",
-          "script": {
-            "type": "text/javascript",
-            "exec": [
-              "pm.test(\"Status code is 404 for non-existing book\", function () {",
-              "    pm.response.to.have.status(404);",
-              "});"
-            ]
-          }
-        }
-      ]
+      "response": []
     },
     {
       "name": "Удаление книги",
@@ -429,147 +164,20 @@
         "method": "DELETE",
         "header": [],
         "url": {
-          "raw": "http://localhost/api/v1/books/1",
+          "raw": "http://localhost:8080/books/1",
           "protocol": "http",
           "host": [
             "localhost"
           ],
+          "port": "8080",
           "path": [
-            "api",
-            "v1",
             "books",
             "1"
           ]
         }
       },
-      "response": [],
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "type": "text/javascript",
-            "exec": [
-              "pm.test(\"Status code is 204\", function () {",
-              "    pm.response.to.have.status(204);",
-              "});"
-            ]
-          }
-        },
-        {
-          "listen": "test",
-          "script": {
-            "type": "text/javascript",
-            "exec": [
-              "pm.test(\"Status code is 404 for non-existing book\", function () {",
-              "    pm.response.to.have.status(404);",
-              "});"
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "name": "Получение списка авторов с неверным URL",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://localhost/api/v1/authors-invalid",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "path": [
-            "api",
-            "v1",
-            "authors-invalid"
-          ]
-        }
-      },
-      "response": [],
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "type": "text/javascript",
-            "exec": [
-              "pm.test(\"Status code is 404 for invalid URL\", function () {",
-              "    pm.response.to.have.status(404);",
-              "});"
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "name": "Создание нового автора с некорректными данными",
-      "request": {
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\"name\": \"\", \"birth_year\": 1900, \"country\": \"\"}"
-        },
-        "url": {
-          "raw": "http://localhost/api/v1/authors",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "path": [
-            "api",
-            "v1",
-            "authors"
-          ]
-        }
-      },
-      "response": [],
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "type": "text/javascript",
-            "exec": [
-              "pm.test(\"Status code is 422 for invalid data\", function () {",
-              "    pm.response.to.have.status(422);",
-              "});"
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "name": "Получение списка книг с неверным URL",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://localhost/api/v1/books-invalid",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "path": [
-            "api",
-            "v1",
-            "books-invalid"
-          ]
-        }
-      },
-      "response": [],
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "type": "text/javascript",
-            "exec": [
-              "pm.test(\"Status code is 404 for invalid URL\", function () {",
-              "    pm.response.to.have.status(404);",
-              "});"
-            ]
-          }
-        }
-      ]
+      "response": []
     }
-  ]
+  ],
+  "protocolProfileBehavior": {}
 }

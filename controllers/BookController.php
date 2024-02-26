@@ -7,26 +7,28 @@ use Yii;
 use yii\base\InvalidConfigException;
 use yii\data\DataFilter;
 use yii\db\StaleObjectException;
+use yii\filters\auth\CompositeAuth;
+use yii\filters\auth\HttpBearerAuth;
 use yii\rest\ActiveController;
 use app\models\Book;
 use yii\web\Response;
 
-class BooksController extends ActiveController
+class BookController extends ActiveController
 {
     public $modelClass = 'app\models\Book';
-/*
+
     public function behaviors(): array
     {
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
-            'class' => \yii\filters\auth\CompositeAuth::class,
+            'class' => CompositeAuth::class,
             'authMethods' => [
-                \yii\filters\auth\HttpBearerAuth::class,
+                HttpBearerAuth::class,
             ],
         ];
         return $behaviors;
     }
-*/
+
     /**
      * Метод для получения списка книг.
      *
@@ -67,16 +69,18 @@ class BooksController extends ActiveController
      */
     public function actionCreate()
     {
-        $model = new Book();
-        $model->load(Yii::$app->request->getBodyParams(), '');
+        $book = new Book();
+        Yii::info(Yii::$app->getRequest()->getBodyParams(), 'debug');
 
-        if ($model->save()) {
+        $book->load(Yii::$app->request->getBodyParams(), '');
+
+        if ($book->save()) {
             Yii::$app->response->setStatusCode(201);
-            return $model;
+            return $book;
         } else {
             Yii::$app->response->setStatusCode(422);
             Yii::$app->response->format = Response::FORMAT_JSON;
-            return ['errors' => $model->errors];
+            return $book->getErrors();
         }
     }
 
@@ -92,20 +96,20 @@ class BooksController extends ActiveController
      */
     public function actionUpdate($id)
     {
-        $model = Book::findOne($id);
-        if ($model === null) {
+        $book = Book::findOne($id);
+        if ($book === null) {
             Yii::$app->response->setStatusCode(404);
             Yii::$app->response->format = Response::FORMAT_JSON;
             return ['error' => 'Книга не найдена'];
         }
-        $model->load(Yii::$app->request->getBodyParams(), '');
+        $book->load(Yii::$app->request->getBodyParams(), '');
 
-        if ($model->save()) {
-            return $model;
+        if ($book->save()) {
+            return $book;
         } else {
             Yii::$app->response->setStatusCode(422);
             Yii::$app->response->format = Response::FORMAT_JSON;
-            return ['errors' => $model->errors];
+            return $book->getErrors();
         }
     }
 
@@ -121,13 +125,13 @@ class BooksController extends ActiveController
      */
     public function actionDelete($id): ?array
     {
-        $model = Book::findOne($id);
-        if ($model === null) {
+        $book = Book::findOne($id);
+        if ($book === null) {
             Yii::$app->response->setStatusCode(404);
             Yii::$app->response->format = Response::FORMAT_JSON;
             return ['error' => 'Книга не найдена'];
         }
-        if ($model->delete()) {
+        if ($book->delete()) {
             Yii::$app->response->setStatusCode(204);
             return ['message' => 'Книга успешно удалена'];
         } else {

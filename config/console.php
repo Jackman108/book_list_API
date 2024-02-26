@@ -27,14 +27,7 @@ $config = [
             ],
         ],
         'db' => $db,
-        'request' => [
-            'class' => 'yii\web\Request',
-            // Дополнительные настройки request для тестов
-        ],
-        'response' => [
-            'class' => 'yii\web\Response',
-            // Дополнительные настройки response для тестов
-        ],
+
     ],
     'params' => $params,
     /*
@@ -58,7 +51,7 @@ if (YII_ENV_DEV) {
     $config['modules']['debug'] = [
         'class' => 'yii\debug\Module',
         // uncomment the following to add your IP if you are not connecting from localhost.
-        //'allowedIPs' => ['127.0.0.1', '::1'],
+        'allowedIPs' => ['127.0.0.1', '::1'],
     ];
 }
 

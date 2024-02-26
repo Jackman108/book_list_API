@@ -80,6 +80,6 @@ class AuthorsAndBooksTest extends TestCase
         parent::tearDownAfterClass();
 
         // Выполнить скрипт для удаления тестовых данных после всех тестов
-        require_once __DIR__ . '/delete_latest_authors_and_books.php';
+      //  require_once __DIR__ . '/delete_latest_authors_and_books.php';
     }
 }

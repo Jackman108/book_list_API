@@ -1,0 +1,198 @@
+{
+	"id": "fa4ee792-9334-4e4a-8f5e-6d0bf2d6f7d2",
+	"name": "REST API 'Список книг'",
+	"timestamp": "2024-02-26T23:23:03.791Z",
+	"collection_id": "25669948-e690a4b8-3c26-41eb-8d12-67a12847e65e",
+	"folder_id": 0,
+	"environment_id": "0",
+	"totalPass": 0,
+	"delay": 0,
+	"persist": true,
+	"status": "finished",
+	"startedAt": "2024-02-26T23:23:00.385Z",
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "d6b7e616-bc68-4d2a-aaf7-e08d1059ab17",
+			"name": "Получение списка авторов",
+			"url": "http://localhost:8080/authors",
+			"time": 277,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				277
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "ceacea70-ce4e-4859-9626-ea654fd74967",
+			"name": "Создание нового автора",
+			"url": "http://localhost:8080/authors",
+			"time": 268,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				268
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "709658eb-dc50-49d0-8d81-16371c0b2d2b",
+			"name": "Редактирование существующего автора",
+			"url": "http://localhost:8080/authors/51",
+			"time": 243,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				243
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "4a9553a7-44b1-4464-a215-6ed7ff28a9bf",
+			"name": "Удаление автора",
+			"url": "http://localhost:8080/authors/51",
+			"time": 333,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				333
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "653c9869-7380-42f1-84af-82718d33233e",
+			"name": "Получение списка книг",
+			"url": "http://localhost:8080/books",
+			"time": 257,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				257
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "3025f69a-0338-4e55-81cf-1bbeef6b2f91",
+			"name": "Создание новой книги",
+			"url": "http://localhost:8080/books",
+			"time": 242,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				242
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "98690f5f-d8bf-4fb5-943c-1b05bb67e3a9",
+			"name": "Редактирование существующей книги",
+			"url": "http://localhost:8080/books/58",
+			"time": 245,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				245
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "a91cf5e8-a440-4a97-a238-1fe12add6bcd",
+			"name": "Удаление книги",
+			"url": "http://localhost:8080/books/58",
+			"time": 240,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				240
+			],
+			"allTests": [
+				{}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 2105,
+	"collection": {
+		"requests": [
+			{
+				"id": "d6b7e616-bc68-4d2a-aaf7-e08d1059ab17",
+				"method": "GET"
+			},
+			{
+				"id": "ceacea70-ce4e-4859-9626-ea654fd74967",
+				"method": "POST"
+			},
+			{
+				"id": "709658eb-dc50-49d0-8d81-16371c0b2d2b",
+				"method": "PUT"
+			},
+			{
+				"id": "4a9553a7-44b1-4464-a215-6ed7ff28a9bf",
+				"method": "DELETE"
+			},
+			{
+				"id": "653c9869-7380-42f1-84af-82718d33233e",
+				"method": "GET"
+			},
+			{
+				"id": "3025f69a-0338-4e55-81cf-1bbeef6b2f91",
+				"method": "POST"
+			},
+			{
+				"id": "98690f5f-d8bf-4fb5-943c-1b05bb67e3a9",
+				"method": "PUT"
+			},
+			{
+				"id": "a91cf5e8-a440-4a97-a238-1fe12add6bcd",
+				"method": "DELETE"
+			}
+		]
+	}
+}

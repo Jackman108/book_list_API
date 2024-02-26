@@ -7,6 +7,8 @@ use Yii;
 use yii\base\InvalidConfigException;
 use yii\data\DataFilter;
 use yii\db\StaleObjectException;
+use yii\filters\auth\CompositeAuth;
+use yii\filters\auth\HttpBearerAuth;
 use yii\rest\ActiveController;
 use app\models\Author;
 use yii\web\Response;
@@ -15,6 +17,18 @@ use yii\web\Response;
 class AuthorController extends ActiveController
 {
     public $modelClass = 'app\models\Author';
+
+       public function behaviors(): array
+       {
+          $behaviors = parent::behaviors();
+           $behaviors['authenticator'] = [
+               'class' => CompositeAuth::class,
+               'authMethods' => [
+                   HttpBearerAuth::class,
+               ],
+           ];
+           return $behaviors;
+       }
 
     /**
      * Метод для получения списка авторов.
@@ -57,6 +71,8 @@ class AuthorController extends ActiveController
     public function actionCreate()
     {
         $author = new Author();
+        Yii::info(Yii::$app->getRequest()->getBodyParams(), 'debug');
+
         $author->load(Yii::$app->getRequest()->getBodyParams(), '');
 
         if ($author->save()) {
