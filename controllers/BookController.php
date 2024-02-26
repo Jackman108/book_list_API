@@ -14,7 +14,19 @@ use yii\web\Response;
 class BooksController extends ActiveController
 {
     public $modelClass = 'app\models\Book';
-
+/*
+    public function behaviors(): array
+    {
+        $behaviors = parent::behaviors();
+        $behaviors['authenticator'] = [
+            'class' => \yii\filters\auth\CompositeAuth::class,
+            'authMethods' => [
+                \yii\filters\auth\HttpBearerAuth::class,
+            ],
+        ];
+        return $behaviors;
+    }
+*/
     /**
      * Метод для получения списка книг.
      *
@@ -84,7 +96,7 @@ class BooksController extends ActiveController
         if ($model === null) {
             Yii::$app->response->setStatusCode(404);
             Yii::$app->response->format = Response::FORMAT_JSON;
-            return ['error' => 'Book not found'];
+            return ['error' => 'Книга не найдена'];
         }
         $model->load(Yii::$app->request->getBodyParams(), '');
 
@@ -113,15 +125,15 @@ class BooksController extends ActiveController
         if ($model === null) {
             Yii::$app->response->setStatusCode(404);
             Yii::$app->response->format = Response::FORMAT_JSON;
-            return ['error' => 'Book not found'];
+            return ['error' => 'Книга не найдена'];
         }
         if ($model->delete()) {
             Yii::$app->response->setStatusCode(204);
-            return null;
+            return ['message' => 'Книга успешно удалена'];
         } else {
             Yii::$app->response->setStatusCode(500);
             Yii::$app->response->format = Response::FORMAT_JSON;
-            return ['error' => 'Error deleting book'];
+            return ['error' => 'Ошибка удаления книги'];
         }
     }
 }
